@@ -51,6 +51,9 @@ export const useRegister = ({ onSuccess }: { onSuccess?: () => void }) => {
       queryClient.setQueryData(userQueryKey, data.user);
       onSuccess?.();
     },
+    onError: (error) => {
+      console.error('Registration error:', error);
+    },
   });
 };
 
