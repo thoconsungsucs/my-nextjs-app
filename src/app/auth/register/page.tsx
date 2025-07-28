@@ -23,11 +23,12 @@ const RegisterPage = () => {
 
   return (
     <RegisterForm
-      onSuccess={() =>
+      onSuccess={() => {
         router.replace(
-          `${redirectTo ? `${decodeURIComponent(redirectTo)}` : paths.app.dashboard.getHref()}`,
-        )
-      }
+          `${redirectTo ? `${decodeURIComponent(redirectTo)}` : paths.auth.login.getHref()}`,
+        );
+        console.log('Registration successful');
+      }}
       chooseTeam={chooseTeam}
       setChooseTeam={() => setChooseTeam(!chooseTeam)}
       teams={teamsQuery.data?.data}

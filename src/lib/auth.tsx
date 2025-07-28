@@ -6,7 +6,7 @@ import {
 } from '@tanstack/react-query';
 import { z } from 'zod';
 
-import { AuthResponse, User } from '@/types/api';
+import { User } from '@/types/api';
 
 import { api } from './api-client';
 import { createSession, deleteSession, Session } from './session';
@@ -44,11 +44,9 @@ export const useLogin = ({ onSuccess }: { onSuccess?: () => void }) => {
 };
 
 export const useRegister = ({ onSuccess }: { onSuccess?: () => void }) => {
-  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: registerWithEmailAndPassword,
-    onSuccess: (data) => {
-      queryClient.setQueryData(userQueryKey, data.user);
+    onSuccess: () => {
       onSuccess?.();
     },
     onError: (error) => {
@@ -106,8 +104,6 @@ export const registerInputSchema = z
 
 export type RegisterInput = z.infer<typeof registerInputSchema>;
 
-const registerWithEmailAndPassword = (
-  data: RegisterInput,
-): Promise<AuthResponse> => {
+const registerWithEmailAndPassword = (data: RegisterInput): Promise<void> => {
   return api.post('/auth/register', data);
 };

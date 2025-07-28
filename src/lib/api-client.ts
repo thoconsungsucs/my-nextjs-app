@@ -78,7 +78,20 @@ async function fetchApi<T>(
     throw new Error(message);
   }
 
-  return response.json();
+  // Check if response has content before trying to parse JSON
+  const contentLength = response.headers.get('content-length');
+  const contentType = response.headers.get('content-type');
+
+  if (contentLength === '0' || !contentType?.includes('application/json')) {
+    return undefined as T;
+  }
+
+  const text = await response.text();
+  if (!text) {
+    return undefined as T;
+  }
+
+  return JSON.parse(text);
 }
 
 export const api = {
