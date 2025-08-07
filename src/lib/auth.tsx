@@ -72,38 +72,26 @@ const logout = (): Promise<void> => {
 };
 
 export const loginInputSchema = z.object({
-  email: z.string().min(1, 'Required').email('Invalid email'),
+  userName: z.string().min(1, 'Required'),
   password: z.string().min(5, 'Required'),
 });
 
 export type LoginInput = z.infer<typeof loginInputSchema>;
 const loginWithEmailAndPassword = (data: LoginInput): Promise<Session> => {
-  return api.post('/login', data);
+  return api.post('/api/auth/login', data);
 };
 
-export const registerInputSchema = z
-  .object({
-    email: z.string().min(1, 'Required'),
-    firstName: z.string().min(1, 'Required'),
-    lastName: z.string().min(1, 'Required'),
-    password: z.string().min(5, 'Required'),
-  })
-  .and(
-    z
-      .object({
-        teamId: z.string().min(1, 'Required'),
-        teamName: z.null().default(null),
-      })
-      .or(
-        z.object({
-          teamName: z.string().min(1, 'Required'),
-          teamId: z.null().default(null),
-        }),
-      ),
-  );
+export const registerInputSchema = z.object({
+  userName: z.string().min(1, 'Required'),
+  password: z.string().min(5, 'Required'),
+  fullName: z.string().min(1, 'Required'),
+  phone: z.string().min(1, 'Required'),
+  email: z.string().min(1, 'Required').email('Invalid email'),
+  address: z.string().min(1, 'Required'),
+});
 
 export type RegisterInput = z.infer<typeof registerInputSchema>;
 
 const registerWithEmailAndPassword = (data: RegisterInput): Promise<void> => {
-  return api.post('/register', data);
+  return api.post('/api/user/register', data);
 };

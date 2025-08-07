@@ -30,10 +30,10 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
         {({ register, formState }) => (
           <>
             <Input
-              type="email"
-              label="Email Address"
-              error={formState.errors['email']}
-              registration={register('email')}
+              type="text"
+              label="User Name"
+              error={formState.errors['userName']}
+              registration={register('userName')}
             />
             <Input
               type="password"
