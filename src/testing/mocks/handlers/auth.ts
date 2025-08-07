@@ -27,7 +27,7 @@ type LoginBody = {
 };
 
 export const authHandlers = [
-  http.post(`${env.API_URL}/auth/register`, async ({ request }) => {
+  http.post(`${env.API_URL}/register`, async ({ request }) => {
     await networkDelay();
     try {
       const userObject = (await request.json()) as RegisterBody;
@@ -109,7 +109,7 @@ export const authHandlers = [
     }
   }),
 
-  http.post(`${env.API_URL}/auth/login`, async ({ request }) => {
+  http.post(`${env.API_URL}/login`, async ({ request }) => {
     await networkDelay();
 
     try {
